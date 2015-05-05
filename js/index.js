@@ -7,7 +7,7 @@ $(document).ready(function(){
 	});
 	$("#binicio").click(inicio);
 	$("#breg").click(registro);
-	$("#bforo").click();
+	$("#bforo").click(foro);
 	
 /*	$("#mail").blur(function(){
 		comprobar($("#mail").val());
@@ -159,6 +159,35 @@ function mostrarN(i){
 function comprobar(mail){
 	$.ajax({
 		  url: 'index.php',
+		  global:false,
+		  type: 'GET',
+		  async: true,
+		  data: 'm='+mail,
+		  success: function(result){
+			  alert($("#resultado").html());
+			  alert(result);
+			  switch($("#resultado").html()){
+			  case "error":
+				  $("#email").html("<br/><span>No es una dirección de correo válida</span>");
+				  break;
+			  case "bien":
+				  $("#email").html($("#email").html()+"<br><span>Dirección de correo disponible</span>");
+				  break;
+			  case "mal":
+				  $("#email").html($("#email").html()+"<br><span>Dirección de correo no disponible</span>");
+				  break;
+			  }
+		  },
+		  error: function(){
+			  alert("error");
+		  }
+		});
+}
+
+//Funcion para mostrar el foro
+function foro(){
+	$.ajax({
+		  url: '../phpbb3/index.php',
 		  global:false,
 		  type: 'GET',
 		  async: true,
