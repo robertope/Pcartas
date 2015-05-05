@@ -156,6 +156,7 @@ function mostrarN(i){
 }
 
 //Funcion que comprueba si un mail esta en la BD
+	//TODO
 function comprobar(mail){
 	$.ajax({
 		  url: 'index.php',
@@ -191,21 +192,9 @@ function foro(){
 		  global:false,
 		  type: 'GET',
 		  async: true,
-		  data: 'm='+mail,
+		  data: '',
 		  success: function(result){
-			  alert($("#resultado").html());
-			  alert(result);
-			  switch($("#resultado").html()){
-			  case "error":
-				  $("#email").html("<br/><span>No es una dirección de correo válida</span>");
-				  break;
-			  case "bien":
-				  $("#email").html($("#email").html()+"<br><span>Dirección de correo disponible</span>");
-				  break;
-			  case "mal":
-				  $("#email").html($("#email").html()+"<br><span>Dirección de correo no disponible</span>");
-				  break;
-			  }
+			  $("#contenido").html(result);
 		  },
 		  error: function(){
 			  alert("error");
