@@ -33,31 +33,36 @@ if(isset($_GET['a'])){
                 echo"<script> i= ".$p.";</script>";
                 $controlador->cNoticia($p);
             }else{
-                //llamada a la funcion para cerrar sesion
-                if(isset($_GET['c'])){
-                    $_SESSION['ok']=" ";
-                    $_SESSION['error']= "Sesión cerrada correctamente";
-                    $controlador->cerSesion();
-                }
-                //Comprobamos si venimos de iniciar sesion o si tenemos recordada la sesion
-                if(isset($_COOKIE['recuerdo'])&& $_COOKIE['recuerdo']!=""){
-                    $controlador->inSesion($_COOKIE['recuerdo']);
+                //Llamada a una noticia
+                if(isset($_GET['noti'])){
+                   $pagina=$controlador->vNoticia($_GET['noti']);
                 }else{
-                    if(isset($_POST['ini'])||isset($_POST['reg'])){
-                        if( isset($_POST['ini'])){
-                            $r=false;
-                            if(isset($_POST['recuerdo'])){
-                                $r=true;
-                            }
-                            $controlador->inSesion($_POST['nom'],$_POST['pass'],$r);
-                        }
-                        if(isset($_POST['reg']) && $_POST['reg']!=""){
-                            $controlador->cRegistro();
-                        }
+                    //llamada a la funcion para cerrar sesion
+                    if(isset($_GET['c'])){
+                        $_SESSION['ok']=" ";
+                        $_SESSION['error']= "Sesión cerrada correctamente";
+                        $controlador->cerSesion();
+                    }
+                    //Comprobamos si venimos de iniciar sesion o si tenemos recordada la sesion
+                    if(isset($_COOKIE['recuerdo'])&& $_COOKIE['recuerdo']!=""){
+                        $controlador->inSesion($_COOKIE['recuerdo']);
                     }else{
-                        //llamamos a cargar el indice
-                        $controlador->cIndice();
-                    }  
+                        if(isset($_POST['ini'])||isset($_POST['reg'])){
+                            if( isset($_POST['ini'])){
+                                $r=false;
+                                if(isset($_POST['recuerdo'])){
+                                    $r=true;
+                                }
+                                $controlador->inSesion($_POST['nom'],$_POST['pass'],$r);
+                            }
+                            if(isset($_POST['reg']) && $_POST['reg']!=""){
+                                $controlador->cRegistro();
+                            }
+                        }else{
+                            //llamamos a cargar el indice
+                            $controlador->cIndice();
+                        }  
+                    }
                 }
             } 
         }

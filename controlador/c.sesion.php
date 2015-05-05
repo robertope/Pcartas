@@ -20,7 +20,8 @@ class Sesion{
     public function recuerdoS($id){
         $res=$this->conexion->consultar("*","jugadores","recuerdo='".$id."' and activado = 1");
         if($res){
-            $_SESSION['nombre']=$res['nombre'];
+            $_SESSION['nombre']=$res[0]['nombre'];
+            $_SESSION['id']=$res[0]['id'];
             $_SESSION['error']="Sesion iniciada con exito";
             $_SESSION['ok']="ok";
             return $res;
@@ -37,7 +38,8 @@ class Sesion{
                 $this->conexion->modificar("jugadores","recuerdo","'".session_id()."'","id='".$id."'");
                 setcookie('recuerdo',session_id(), time()+60*60*24*7,"/");
             }
-            $_SESSION['nombre']=$res['nombre'];
+            $_SESSION['nombre']=$res[0]['nombre'];
+            $_SESSION['id']=$res[0]['id'];
             $_SESSION['error']="Sesion iniciada con exito";
             $_SESSION['ok']="ok";
             return $res;
@@ -51,6 +53,14 @@ class Sesion{
     public function cerrarS(){
         setcookie('recuerdo',"", time()-60*60*24*7,"/");
         $_SESSION['nombre']=" ";
+        $_SESSION['id']=" ";
         return true; 
     }
+    
+    //Funcion para mantener la sesion activa
+    public function mantenerS(){
+        $res=$this->conexion->consultar("*","jugadores","id='".$_SESSION['id']."'");
+        return $res;
+    }
+  
 }

@@ -2,9 +2,13 @@
 $(document).ready(function(){
 	$("#inses").click(init);
 	$("#cerses").click(close);
-	$("#noticias").click(function(){
+	$("#bnoticias").click(function(){
 		mostrarN(i)
 	});
+	$("#binicio").click(inicio);
+	$("#breg").click(registro);
+	$("#bforo").click();
+	
 /*	$("#mail").blur(function(){
 		comprobar($("#mail").val());
 	})*/
@@ -13,6 +17,43 @@ $(document).ready(function(){
 
 var e="";
 var i= 1;
+
+
+
+//Funcion para cargar el registro
+function registro(){
+	
+	$.ajax({
+		  url: 'vista/v.form.registro.php',
+		  global:false,
+		  type: 'GET',
+		  async: true,
+		  data: '',
+		  success: function(result){
+			  $("#contenido").html(result);
+		  },
+		  error: function(){
+			  alert("error");
+		  }
+		});	
+}
+
+//funcion para cargar el index
+function inicio(){
+	$.ajax({
+		  url: 'vista/pages/v.index.php',
+		  global:false,
+		  type: 'GET',
+		  async: true,
+		  data: '',
+		  success: function(result){
+			  $("#contenido").html(result);
+		  },
+		  error: function(){
+			  alert("error");
+		  }
+		});	
+}
 
 //Funcion que muestra el login en el div de contenido
 function init(){

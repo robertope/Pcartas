@@ -21,7 +21,7 @@ class Principal {
     }
     
     //Funcion para cargar la plantilla, el estilo y los elementos comunes
-    private function plantilla($estilo="",$titulo="",$pie="",$botones="",$title="",$login=""){
+    private function plantilla($estilo="",$titulo="",$pie="",$botones="",$title=""){
         //Cargamos la plantilla en una variable
         $pagina= $this->cargar("vista/v.plantilla.php");
         if($estilo==""){
@@ -41,7 +41,11 @@ class Principal {
         if($title==""){
             $pagina= preg_replace('/\#TITLE\#/ms', $this->cargar("vista/v.title.php"), $pagina);
         }
-        if($login==""){
+        if(isset($_SESSION['id'])&& $_SESSION['id']!= " "){
+            $sesion = new Sesion();
+            $mantenerS = $sesion->mantenerS();
+            $pagina= preg_replace('/\#LOGIN\#/ms',$this->cUsuario($mantenerS), $pagina);
+        }else{
             $pagina= preg_replace('/\#LOGIN\#/ms', $this->cargar("vista/v.login.php"), $pagina);
         }
         $pagina= preg_replace('/\#REDES\#/ms', $this->cargar("plugin/paypal/boton.donacion.php"), $pagina);
@@ -69,7 +73,7 @@ class Principal {
             if($p == ""){
                 $res=$controlador->recuerdoS($n);
                if($res){
-                   $this->cUsuario($res);
+                   $this->indice();
                }else{
                  $_COOKIE['recuerdo']="";
                  $this->indice();
@@ -77,7 +81,7 @@ class Principal {
             }else{
                 $res=$controlador->iniciarS($n,$p,$r);
                 if($res){
-                    $this->cUsuario($res);
+                    $this->indice();
                 }else{
                     $this->indice();
                 }
@@ -97,13 +101,10 @@ class Principal {
     //Funcion para cargar la informacion del usuario
     public function cUsuario($res){
         $zusu = $this->cargar("vista/v.zusu.php");
-        $zusu= preg_replace('/\#NOMBRE\#/ms', $res['nombre'], $zusu);
-        $zusu= preg_replace('/\#MONEDAS\#/ms', $res['monedas'], $zusu);
-        $zusu= preg_replace('/\#DINERO\#/ms', $res['dinero'], $zusu);
-        $pagina = $this->plantilla("","","","","","no");
-        $pagina= preg_replace('/\#LOGIN\#/ms',$zusu,$pagina);
-        $pagina= preg_replace('/\#CONTENIDO\#/ms', $this->cargar("vista/pages/v.index.php"),$pagina);
-        echo $pagina;
+        $zusu= preg_replace('/\#NOMBRE\#/ms', $res[0]['nombre'], $zusu);
+        $zusu= preg_replace('/\#MONEDAS\#/ms', $res[0]['monedas'], $zusu);
+        $zusu= preg_replace('/\#DINERO\#/ms', $res[0]['dinero'], $zusu);
+        echo $zusu;
     }
     
     //Funcion para cerrar la sesion
@@ -145,7 +146,25 @@ class Principal {
         }
     }
     
-    //funcion para activar la cuenta de usuario
+    //Funcion para mostrar una noticia
+    public function vNoticia($n){
+        $noticia= new Noticias();
+        $res =  $noticia->noticia($n);
+        if($res){
+           $texto=$this->cargar("vista/pages/v.noticia.php");
+           $texto= preg_replace('/\#NTITULO\#/ms',$res[0]['titulo'],$texto);
+           $texto= preg_replace('/\#NTEXTO\#/ms',$res[0]['contenido'],$texto);
+           $pagina= $this->plantilla();
+           $pagina= preg_replace('/\#CONTENIDO\#/ms', $texto,$pagina);
+           echo $pagina;
+        }else{
+            $_SESSION['error']= "Ha ocurrido un error al cargar la noticia";
+            $this->indice();
+        }
+           
+    }
+    
+    //Funcion para activar la cuenta de usuario
     public function activarR($codigo){
         $reg= new Registro();
         $reg->activar($codigo);
