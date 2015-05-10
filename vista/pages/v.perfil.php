@@ -41,7 +41,7 @@
         <td>#NDERROTAS#</td>
     </tr>
     <tr>
-        <td><span>Grafico:</span></td>
-        <td>#GRAFICO#</td>
+        <td><span>Grafico:</span><button id="botonG">Mostrar Gráfico</button></td>
+        <td><canvas id="grafico"></canvas></td>
     </tr>
 </table>

@@ -6,6 +6,7 @@ require_once 'c.noticias.php';
 require_once 'c.registro.php';
 require_once 'c.mandarMail.php';
 require_once 'c.usuario.php';
+require_once 'c.tienda.php';
 
 //Ese es el controlador principal o frontal.
 //por el pasan casi todas las acciones que realiza la página
@@ -201,9 +202,21 @@ class Principal {
         $datos=$usuario->perfil($res);
         $plantilla = preg_replace('/\#NCARTAS\#/ms',$datos[0],$plantilla);
         $plantilla = preg_replace('/\#NMAZOS\#/ms',$datos[1],$plantilla);
-        echo $plantilla;
+        $plantilla = preg_replace('/\#NVICTORIAS\#/ms',$datos[2],$plantilla);
+        $plantilla = preg_replace('/\#NDERROTAS\#/ms',$datos[3],$plantilla);
+        $plantilla = preg_replace('/\#NPARTIDAS\#/ms',$datos[4],$plantilla);
+        
+        $pVictorias= $usuario->porcentaje($datos[4],360,$datos[2]);
+        
+        echo $plantilla."<script>victorias=".$pVictorias.";</script>";
         
         
+    }
+    
+    //Funcion para mostrar la tienda
+    public function mostrarTienda(){
+        $tienda = new Tienda();
+        echo $tienda->mostrarTienda();
     }
 }
 ?>

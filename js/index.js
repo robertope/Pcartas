@@ -8,9 +8,10 @@ $(document).ready(function(){
 	$("#binicio").click(inicio);
 	$("#breg").click(registro);
 	$("#bperfil").click(perfil);
-	$("#btienda").click();
+	$("#btienda").click(tienda);
 	$("#bbaraja").click();
 	$("#bforo").click();
+	$("#botonG").click(grafico);
 	mError(e);
 	
 /*	$("#mail").blur(function(){
@@ -20,7 +21,7 @@ $(document).ready(function(){
 
 var e="";
 var i= 1;
-
+var victorias=0;
 
 
 //Funcion para cargar el registro
@@ -204,4 +205,46 @@ function perfil(){
 		});
 }
 
+//Funcion para cargar la tienda
+function tienda(){
+	$.ajax({
+		  url: 'index.php',
+		  global:false,
+		  type: 'POST',
+		  async: true,
+		  data: 'tienda=1',
+		  success: function(result){
+			  $("#contenido").html(result);
+		  },
+		  error: function(){
+			  alert("error");
+		  }
+		});
+}
+
+function grafico(){
+	can= document.getElementById("grafico");
+	var ctx=can.getContext("2d");
+	derrotas= 360-victorias;
+	rad= (Math.PI/180)*victorias;
+	rad2= (Math.PI/180)*derrotas;
+	ctx.beginPath();
+	ctx.moveTo(75,75);
+	ctx.arc(75,75,60,0,rad,true);
+	ctx.lineWidth=3
+	ctx.fillStyle="green";
+	ctx.closePath();
+	ctx.stroke();
+	ctx.fill();
+	
+	var ctx2=can.getContext("2d");
+	ctx2.fillStyle="red";
+	ctx2.beginPath();
+	ctx2.moveTo(75,75);
+	ctx2.arc(75,75,60,0,rad2,false);
+	ctx2.closePath();
+	ctx2.stroke();
+	ctx2.fill();
+	
+}
 	
