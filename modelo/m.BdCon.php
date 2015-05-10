@@ -8,6 +8,8 @@ class Conexion {
     //Funcion que llama a la funcion de conectar
     public function conexion(){
         $this->conectar();
+        //Para hacer que se muestren bien las ñs
+        $this->conn->query("SET NAMES 'utf8'");
     }
 
     //funcion para desconectar la BD

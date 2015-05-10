@@ -60,6 +60,7 @@ footer{
 }
 
 #contenido{
+	overflow:auto;
 	color:white;
 	position:absolute;
 	margin-top:8%;
@@ -78,4 +79,11 @@ footer{
 	padding: 3px;
 	margin: 5px;
 	background-color: white;
+}
+#tpefil{
+	color: white;
+}
+#tperfil img{
+	height: 100px;
+	width: 100px;
 }

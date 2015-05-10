@@ -7,12 +7,15 @@ $(document).ready(function(){
 	});
 	$("#binicio").click(inicio);
 	$("#breg").click(registro);
+	$("#bperfil").click(perfil);
+	$("#btienda").click();
+	$("#bbaraja").click();
 	$("#bforo").click();
+	mError(e);
 	
 /*	$("#mail").blur(function(){
 		comprobar($("#mail").val());
 	})*/
-	mError(e);
 });
 
 var e="";
@@ -177,6 +180,23 @@ function comprobar(mail){
 				  $("#email").html($("#email").html()+"<br><span>Dirección de correo no disponible</span>");
 				  break;
 			  }
+		  },
+		  error: function(){
+			  alert("error");
+		  }
+		});
+}
+
+//Funcion para cargar el perfil
+function perfil(){
+	$.ajax({
+		  url: 'index.php',
+		  global:false,
+		  type: 'POST',
+		  async: true,
+		  data: 'perfil=1',
+		  success: function(result){
+			  $("#contenido").html(result);
 		  },
 		  error: function(){
 			  alert("error");

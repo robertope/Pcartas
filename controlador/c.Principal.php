@@ -1,9 +1,11 @@
 <?php
+
 require_once '/modelo/m.Config.php';
 require_once 'c.sesion.php';
 require_once 'c.noticias.php';
 require_once 'c.registro.php';
 require_once 'c.mandarMail.php';
+require_once 'c.usuario.php';
 
 //Ese es el controlador principal o frontal.
 //por el pasan casi todas las acciones que realiza la página
@@ -36,7 +38,11 @@ class Principal {
             $pagina= preg_replace('/\#PIE\#/ms', $pie, $pagina);
         }
         if($botones==""){
-            $pagina= preg_replace('/\#BOTONES\#/ms', $this->cargar("vista/v.botones.php"), $pagina);
+            if(isset($_SESSION['id'])&& $_SESSION['id']!= " "){
+                $pagina= preg_replace('/\#BOTONES\#/ms', $this->cargar("vista/v.botones.zusu.php"), $pagina);
+            }else{
+                $pagina= preg_replace('/\#BOTONES\#/ms', $this->cargar("vista/v.botones.php"), $pagina);
+            }
         }
         if($title==""){
             $pagina= preg_replace('/\#TITLE\#/ms', $this->cargar("vista/v.title.php"), $pagina);
@@ -173,6 +179,30 @@ class Principal {
         }else{
             $this->indice();
         }
+        
+    }
+    
+    //Funcion para mostrar el perfil del jugador
+    public function mostrarPerfil(){
+        $sesion = new Sesion();
+        $usuario = new Usuario();
+        $res = $sesion->mantenerS();
+        $plantilla = $this->cargar("vista/pages/v.perfil.php");
+        $plantilla = preg_replace('/\#NOMBRE\#/ms',$res[0]['nombre'],$plantilla);
+        if($res[0]['avatar']==null){
+            $plantilla = preg_replace('/\#\IMAGEN#/ms',"<img src='img/perfil.png'></img>",$plantilla);
+        }else{
+            $plantilla = preg_replace('/\#\IMAGEN#/ms',"<img src='img/avatar/".$res[0]['avatar']."'></img>",$plantilla);
+        }
+        $plantilla = preg_replace('/\#CORREO\#/ms',$res[0]['mail'],$plantilla);
+        $plantilla = preg_replace('/\#PAIS\#/ms',$res[0]['pais'],$plantilla);
+        $plantilla = preg_replace('/\#MONEDAS\#/ms',$res[0]['monedas'],$plantilla);
+        $plantilla = preg_replace('/\#DINERO\#/ms',$res[0]['dinero'],$plantilla);
+        $datos=$usuario->perfil($res);
+        $plantilla = preg_replace('/\#NCARTAS\#/ms',$datos[0],$plantilla);
+        $plantilla = preg_replace('/\#NMAZOS\#/ms',$datos[1],$plantilla);
+        echo $plantilla;
+        
         
     }
 }
