@@ -89,6 +89,21 @@ footer{
 }
 
 .paquete img{
-	height: 100px;
-	width: 100px;
+	height: 250px;
+	width: 150px;
+}
+
+.paquete{
+	 border: 5px solid red;
+	 padding: 10px;
+	margin:15px;
+	display:inline-block;
+}
+
+.mPaquete{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	background-color: white;
+	
 }

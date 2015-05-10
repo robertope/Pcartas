@@ -6,9 +6,6 @@ require_once 'controlador/c.Principal.php';
 //Iniciamos o recuperamos sesion
 session_start();
 
-//Cargamos la libreria de jquery
-echo "<script src='http://code.jquery.com/jquery-1.10.1.min.js'></script>";
-echo "<script src='js/index.js'></script>";
 echo "<meta charset='UTF-8'>";
 //Creamos una instancia del controlador principal
 $controlador= new Principal();

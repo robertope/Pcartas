@@ -27,6 +27,7 @@ class Principal {
     private function plantilla($estilo="",$titulo="",$pie="",$botones="",$title=""){
         //Cargamos la plantilla en una variable
         $pagina= $this->cargar("vista/v.plantilla.php");
+        $pagina=$pagina."<script src='http://code.jquery.com/jquery-1.10.1.min.js'></script><script src='js/index.js'></script>";
         if($estilo==""){
             $pagina= preg_replace('/\#ESTILO\#/ms', "vista/css/".Config::$css, $pagina);
         }

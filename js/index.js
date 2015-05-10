@@ -1,5 +1,13 @@
 //Agregamos los manejadores
 $(document).ready(function(){
+	manejadores();
+});
+
+var e="";
+var i= 1;
+var victorias=0;
+
+function manejadores(){
 	$("#inses").click(init);
 	$("#cerses").click(close);
 	$("#bnoticias").click(function(){
@@ -14,14 +22,14 @@ $(document).ready(function(){
 	$("#botonG").click(grafico);
 	mError(e);
 	
+	$(".paquete img").click(function(){
+		mostrarPaquete(this);
+	});
+	
 /*	$("#mail").blur(function(){
 		comprobar($("#mail").val());
 	})*/
-});
-
-var e="";
-var i= 1;
-var victorias=0;
+}
 
 
 //Funcion para cargar el registro
@@ -35,6 +43,7 @@ function registro(){
 		  data: '',
 		  success: function(result){
 			  $("#contenido").html(result);
+			  manejadores();
 		  },
 		  error: function(){
 			  alert("error");
@@ -52,6 +61,7 @@ function inicio(){
 		  data: '',
 		  success: function(result){
 			  $("#contenido").html(result);
+			  manejadores();
 		  },
 		  error: function(){
 			  alert("error");
@@ -69,6 +79,7 @@ function init(){
 		  data: '',
 		  success: function(result){
 			  $("#contenido").html(result);
+			  manejadores();
 		  },
 		  error: function(){
 			  alert("error");
@@ -152,6 +163,7 @@ function mostrarN(i){
 		  data: 'n='+i,
 		  success: function(result){
 			  $("#contenido").html(result);
+			  manejadores();
 		  },
 		  error: function(){
 			  alert("error");
@@ -198,6 +210,7 @@ function perfil(){
 		  data: 'perfil=1',
 		  success: function(result){
 			  $("#contenido").html(result);
+			  manejadores();
 		  },
 		  error: function(){
 			  alert("error");
@@ -215,6 +228,7 @@ function tienda(){
 		  data: 'tienda=1',
 		  success: function(result){
 			  $("#contenido").html(result);
+			  manejadores();
 		  },
 		  error: function(){
 			  alert("error");
@@ -222,6 +236,16 @@ function tienda(){
 		});
 }
 
+function mostrarPaquete(e){
+	var id= e.parentNode.getAttribute('id');
+	longitud=id.length-1;
+	elemento=(id.substring(longitud));
+	$("#"+elemento).css({"heigth":"100%","width":"100%"});
+	$("#"+elemento).toggle(100);
+}
+
+
+//Funcion que muestra el grafico de victorias/derrotas
 function grafico(){
 	can= document.getElementById("grafico");
 	var ctx=can.getContext("2d");
