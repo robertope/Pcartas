@@ -105,5 +105,18 @@ footer{
 	top: 20px;
 	right: 20px;
 	background-color: white;
-	
+}
+
+.descripcion{
+	overflow:auto;
+	color:black;
+	text-align: center;
+}
+
+.mPaquete img{
+	float:left;
+}
+
+.mPaquete button{
+	top:80%;
 }

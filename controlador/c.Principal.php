@@ -219,5 +219,17 @@ class Principal {
         $tienda = new Tienda();
         echo $tienda->mostrarTienda();
     }
+    
+    //Funcion para comprar
+    public function comprar($t,$p){
+        $tienda = new Tienda();
+        $sesion = new Sesion();
+        $mantenerS = $sesion->mantenerS();
+        $resultado= $tienda->comprar($t,$p,$mantenerS);
+        
+        if($resultado=="1"){
+            echo"<div id='resultado'>1</div>";
+        }
+    }
 }
 ?>

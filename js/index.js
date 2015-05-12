@@ -237,11 +237,29 @@ function tienda(){
 }
 
 function mostrarPaquete(e){
+	
 	var id= e.parentNode.getAttribute('id');
 	longitud=id.length-1;
 	elemento=(id.substring(longitud));
 	$("#"+elemento).css({"heigth":"100%","width":"100%"});
-	$("#"+elemento).toggle(100);
+	$("#"+elemento).show(1000);
+	$("#"+elemento+" #bCerrar").click(function(){
+		$("#"+elemento).hide(1000);
+	});
+	$("#"+elemento+" #bMonedas").click(function(){
+		if(confirm("¿Quieres comprar este paquete con monedas?")){
+			if(confirm("¿Seguro?")){
+				pagar("m",elemento);
+			}
+		}
+	});
+	$("#"+elemento+" #bDinero").click(function(){
+		if(confirm("¿Quieres comprar este paquete con Dinero?")){
+			if(confirm("¿Seguro?")){
+				pagar("d",elemento);
+			}
+		}
+	});
 }
 
 
@@ -270,5 +288,23 @@ function grafico(){
 	ctx2.stroke();
 	ctx2.fill();
 	
+}
+
+//Funcion para pagar un paquete
+function pagar(t,e){
+	$.ajax({
+		  url: 'index.php',
+		  global:false,
+		  type: 'POST',
+		  async: true,
+		  data: 'tipo='+t+"&paquete="+e,
+		  success: function(result){
+			  alert(result);
+			  manejadores();
+		  },
+		  error: function(){
+			  alert("error");
+		  }
+		});
 }
 	
