@@ -17,7 +17,8 @@ function manejadores(){
 	$("#breg").click(registro);
 	$("#bperfil").click(perfil);
 	$("#btienda").click(tienda);
-	$("#bbaraja").click();
+	$("#bbarajas").click(baraja);
+	$("#bcrearb").click(crear);
 	$("#bforo").click();
 	$("#botonG").click(grafico);
 	mError(e);
@@ -299,7 +300,49 @@ function pagar(t,e){
 		  async: true,
 		  data: 'tipo='+t+"&paquete="+e,
 		  success: function(result){
-			  alert(result);
+			  $("#"+e+" .descripcion2").html(result);
+			  $("#"+e+" .descripcion2").css({"heigth":"100%","width":"100%","z-index":"999"});	
+			  $("#"+e+" .descripcion2").show(1000);
+			  $("#"+e+" .descripcion2").click(function(){
+				  $("#"+e+" .descripcion2").html("");
+				  $("#"+e+" .descripcion2").hide(1000);
+			  });
+			  manejadores();
+		  },
+		  error: function(){
+			  alert("fallo");
+		  }
+		});
+}
+
+//Funcion para mostrar las barajas de un jugador
+function baraja(){
+	$.ajax({
+		  url: 'index.php',
+		  global:false,
+		  type: 'GET',
+		  async: true,
+		  data: 'b=b',
+		  success: function(result){
+			  $("#contenido").html(result);
+			  manejadores();
+		  },
+		  error: function(){
+			  alert("error");
+		  }
+		});
+}
+
+//funcion para crear una baraja
+function crear(){
+	$.ajax({
+		  url: 'index.php',
+		  global:false,
+		  type: 'GET',
+		  async: true,
+		  data: 'crear=b',
+		  success: function(result){
+			  $("#contenido").html(result);
 			  manejadores();
 		  },
 		  error: function(){

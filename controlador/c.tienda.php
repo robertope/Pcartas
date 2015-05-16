@@ -18,11 +18,13 @@ class Tienda{
     public function mostrarTienda(){
         $paquetes=$this->conexion->consultar("*","paquetes");
         $pagina="<div id='paquetes'>";
+        
+        //TODO Sacar una plantilla
         foreach ($paquetes as $paquete){
             $pagina= $pagina."<div class='paquete' id='paquete".$paquete['id_paquete']."' ><img src='img/paquetes/".$paquete['imagen']."'/><h4>".$paquete['nombre_paquete']."</h4><h5>".$paquete['precio_monedas'].
              " Mo</h5><h5>".$paquete['precio_dinero']." €</h5></div><div class='mPaquete' id='".$paquete['id_paquete']."'style='heigth:0px; width:0px;position:absolute; overflow:hidden;'> <img src='img/paquetes/".$paquete['imagen']."'/><div id='pbotones'><button id='bMonedas'>
                      Pagar con monedas</button><button id='bDinero'>Pagar con dinero</button><button id='bCerrar'>Volver</button></div><div class='descripcion'>"
-                     .$paquete['descripcion']."</div></div>";
+                     .$paquete['descripcion']."</div><div class='descripcion2'style='heigth:0px; width:0px;'></div></div>";
         }
         $pagina=$pagina."</div>";
         return $pagina;
@@ -33,18 +35,18 @@ class Tienda{
         $paquete= $this->conexion->consultar("*","paquetes","id_paquete=".$p);
         if($t=="m"){
             if($res[0]['monedas']>= $paquete[0]['precio_monedas']){
-                $restante= $res[0]['monedas']-$paquete[0]['precio_monedas'];
+                $restantes= $res[0]['monedas']-$paquete[0]['precio_monedas'];
                 $filas=$this->conexion->modificar("jugadores","monedas",$restantes,"id='".$res[0]['id']."'");
                 if($filas==1){
                     if($paquete[0]['tipo']=='m'){
-                        $resultado=abrirPaquete($paquete,$res);
+                        $resultado= $this->abrirPaquete($paquete,$res);
                         if($resultado){
-                            return "1";
+                            return $resultado;
                         }else{
                             return "error";
                         }
                     }elseif ($paquete[0]['tipo'=='s']){
-                        $resultado=abrirSobre($res);
+                        $resultado=$this->abrirSobre($res);
                         if($resultado){
                             return $resultado;
                         }else{
@@ -61,18 +63,18 @@ class Tienda{
             }
         }elseif ($t=="d"){
             if($res[0]['dinero']>= $paquete[0]['precio_dinero']){
-                $restante= $res[0]['dinero']-$paquete[0]['precio_dinero'];
+                $restantes= $res[0]['dinero']-$paquete[0]['precio_dinero'];
                 $filas=$this->conexion->modificar("jugadores","dinero",$restantes,"id='".$res[0]['id']."'");
                 if($filas==1){
                     if($paquete[0]['tipo']=='m'){
-                        $resultado=abrirPaquete($paquete,$res);
+                        $resultado=$this->abrirPaquete($paquete,$res);
                         if($resultado){
                             return "Mazo comprado con éxito";
                         }else{
                             return "error";
                         }
                     }elseif ($paquete[0]['tipo'=='s']){
-                        $resultado=abrirSobre($res);
+                        $resultado=$this->abrirSobre($res);
                         if($resultado){
                             return $resultado;
                         }else{
@@ -95,22 +97,23 @@ class Tienda{
     //Funcion para abrir un mazo
     private function abrirPaquete($paquete,$usuario){
         $cartas = $this->conexion->consultar("*","cartas_paquete","id_paquete=".$paquete[0]['id_paquete']);
-        $cartasj = $this->conexion->consultar("*","cartas_jugador","id_jugador='".$usuario[0]['id']);
+        $cartasj = $this->conexion->consultar("*","cartas_jugador","id_jugador='".$usuario[0]['id']."'");
         foreach ($cartas as $carta){
-            $esta="false";
+            $esta=false;
             foreach ($cartasj as $cartaj){
-                if($carta['id']==$cartaj['id_carta']){
+                if($carta['id_carta']==$cartaj['id_carta']){
                     $esta=true;
                     break;
                 }
-                if($esta){
-                    $this->conexion->modificar("cartas_jugador","n_copias","n_copias+".$carta['n_copias'],"id_jugador='".$usuario[0]['id']."' and id_carta=".$carta['id_carta']);
-                }else{
-                    $this->conexion->insertar("cartas_jugador","'".$usuario[0]['id']."',".$carta['id_carta'].",".$carta['n_copias']);
-                }
             }
+            if($esta){
+                $this->conexion->modificar("cartas_jugador","n_copias","n_copias+".$carta['n_copias'],"id_jugador='".$usuario[0]['id']."' and id_carta=".$carta['id_carta']);
+            }else{
+                $this->conexion->insertar("cartas_jugador","'".$usuario[0]['id']."',".$carta['id_carta'].",".$carta['n_copias']);
+            }
+            
         }
-        return true;
+        return "Mazo comprado con exito";
     }
     
     //Funcion para abrir un sobre
@@ -135,7 +138,7 @@ class Tienda{
         $r=4;
         $in=6;
         $co=10;
-        $cartas("*","cartas");
+        $cartas= $this->conexion->consultar("*","cartas");
         
         for($i=0;$i<20;$i++){
             $repe=true;
@@ -147,22 +150,22 @@ class Tienda{
                  if($carta['tipo']=="p"&& $p>0){
                      $r= $r -1;
                      $p = $p -1;
-                     $sobre[i]=$carta;
+                     $sobre[$i]=$carta;
                      $repe=false;
                  }elseif ($carta['tipo']=="l"&& $l>0){
                      $r= $r -1;
                      $l = $l -1;
-                     $sobre[i]=$carta;
+                     $sobre[$i]=$carta;
                      $repe=false;
                  }elseif ($carta['tipo']=="j"&& $j>0){
                      $r= $r -1;
                      $j = $j -1;
-                     $sobre[i]=$carta;
+                     $sobre[$i]=$carta;
                      $repe=false;
-                 }elseif ($p==0 && $l==0 && j==0 && $ale>0){
+                 }elseif ($p==0 && $l==0 && $j==0 && $ale>0){
                      $r= $r -1;
                      $ale = $ale -1;
-                     $sobre[i]=$carta;
+                     $sobre[$i]=$carta;
                      $repe=false;
                  }  
                   
@@ -170,22 +173,22 @@ class Tienda{
                     if($carta['tipo']=="p"&& $p>0){
                         $in= $in -1;
                         $p = $p -1;
-                        $sobre[i]=$carta;
+                        $sobre[$i]=$carta;
                         $repe=false;
                     }elseif ($carta['tipo']=="l"&& $l>0){
                         $in= $in -1;
                         $l = $l -1;
-                        $sobre[i]=$carta;
+                        $sobre[$i]=$carta;
                         $repe=false;
                     }elseif ($carta['tipo']=="j"&& $j>0){
                         $in= $in -1;
                         $j = $j -1;
-                        $sobre[i]=$carta;
+                        $sobre[$i]=$carta;
                         $repe=false;
-                    }elseif ($p==0 && $l==0 && j==0 && $ale>0){
+                    }elseif ($p==0 && $l==0 && $j==0 && $ale>0){
                         $in= $in -1;
                         $ale = $ale -1;
-                        $sobre[i]=$carta;
+                        $sobre[$i]=$carta;
                         $repe=false;
                     }
                     
@@ -193,58 +196,57 @@ class Tienda{
                     if($carta['tipo']=="p"&& $p>0){
                         $co= $co -1;
                         $p = $p -1;
-                        $sobre[i]=$carta;
+                        $sobre[$i]=$carta;
                         $repe=false;
                     }elseif ($carta['tipo']=="l"&& $l>0){
                         $co= $co -1;
                         $l = $l -1;
-                        $sobre[i]=$carta;
+                        $sobre[$i]=$carta;
                         $repe=false;
                     }elseif ($carta['tipo']=="j"&& $j>0){
                         $co= $co -1;
                         $j = $j -1;
-                        $sobre[i]=$carta;
+                        $sobre[$i]=$carta;
                         $repe=false;
-                    }elseif ($p==0 && $l==0 && j==0 && $ale>0){
+                    }elseif ($p==0 && $l==0 && $j==0 && $ale>0){
                         $co= $co -1;
                         $ale = $ale -1;
-                        $sobre[i]=$carta;
+                        $sobre[$i]=$carta;
                         $repe=false;
                     }
                 }
             }while($repe);
         }
         
-        $cartasj = $this->conexion->consultar("*","cartas_jugador","id_jugador='".$usuario[0]['id']);
+        $cartasj = $this->conexion->consultar("*","cartas_jugador","id_jugador='".$usuario[0]['id']."'");
         $puesta=array();
         $iti=0;
         foreach ($sobre as $carta){
-            $esta="false";
-            $repe="false";
+            $esta=false;
+            $repe=false;
             foreach ($cartasj as $cartaj){
                 if($carta['id']==$cartaj['id_carta']){
                     $esta=true;
                     break;
                 }
-                if($esta){
-                    $this->conexion->modificar("cartas_jugador","n_copias","n_copias+1","id_jugador='".$usuario[0]['id']."' and id_carta=".$carta['id']);
-                }else{
-                    for($i=0;$i<count($puesta);$i++){
-                        if($puesta[$i]['id']==$carta['id']){
-                            $repe=true;
-                            break;
-                        }
-                    }
-                    if($repe){
-                        $this->conexion->modificar("cartas_jugador","n_copias","n_copias+1","id_jugador='".$usuario[0]['id']."' and id_carta=".$carta['id']);
-                    }else{
-                        $repe[$iti]=$carta;
-                        $iti++;
-                        $this->conexion->insertar("cartas_jugador","'".$usuario[0]['id']."',".$carta['id'].",1");
+            }
+            if($esta){
+                $this->conexion->modificar("cartas_jugador","n_copias","n_copias+1","id_jugador='".$usuario[0]['id']."' and id_carta=".$carta['id']);
+            }else{
+                for($i=0;$i<count($puesta);$i++){
+                    if($puesta[$i]['id']==$carta['id']){
+                        $repe=true;
                     }
                 }
+                if($repe){
+                    $this->conexion->modificar("cartas_jugador","n_copias","n_copias+1","id_jugador='".$usuario[0]['id']."' and id_carta=".$carta['id']);
+                }else{
+                    $puesta[$iti]=$carta;
+                    $iti++;
+                    $this->conexion->insertar("cartas_jugador","'".$usuario[0]['id']."',".$carta['id'].",1");
+                }
             }
-        }
+       }
         return $sobre;
     }
 }

@@ -16,8 +16,12 @@ class Usuario{
     }
     
     public function porcentaje($maximo,$referencia,$valor){
-        $resultado = ($valor*$referencia)/$maximo;
-        return $resultado;
+        if($maximo>0 && $referencia>0 && $valor >0){
+            $resultado = ($valor*$referencia)/$maximo;
+            return $resultado;
+        }else{
+            return 0;
+        }
     }
     
     //Funcion para mostrar el perfil de un usuario

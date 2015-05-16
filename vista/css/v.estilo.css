@@ -120,3 +120,20 @@ footer{
 .mPaquete button{
 	top:80%;
 }
+.descripcion2{
+	margin:10px;
+	background-color:red;
+	font-size:5em;
+	position: absolute;
+	top:50px;
+	overflow:visible;
+	color:black;
+	text-align: center;
+}
+
+.descripcion2 img{
+	float:none;
+	height: 150px;
+	width: 150px;
+	margin: 5px;
+}

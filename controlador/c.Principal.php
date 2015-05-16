@@ -7,6 +7,7 @@ require_once 'c.registro.php';
 require_once 'c.mandarMail.php';
 require_once 'c.usuario.php';
 require_once 'c.tienda.php';
+require_once 'c.barajas.php';
 
 //Ese es el controlador principal o frontal.
 //por el pasan casi todas las acciones que realiza la página
@@ -226,10 +227,51 @@ class Principal {
         $sesion = new Sesion();
         $mantenerS = $sesion->mantenerS();
         $resultado= $tienda->comprar($t,$p,$mantenerS);
-        
-        if($resultado=="1"){
-            echo"<div id='resultado'>1</div>";
+        if(is_array($resultado)){
+            $pagina="";
+            foreach ( $resultado as $carta){
+                $pagina=$pagina."<img src='img/cartas/".$carta['imagen']."'>";
+            }
+            echo $pagina;
+        }else{
+            echo"<div id='resultado'>".$resultado."</div>";
         }
+    }
+    
+    //Funcion para mostrar las barajas de un jugador.
+    function barajas(){
+        $pagina="";
+        $baraja= new Baraja();
+        $mazos=$baraja->mostrar();
+        if(count($mazos)==0){
+            $pagina= "No tienes creada ninguna baraja<br>";
+        }else{
+            $pagina="<table><tr><th>NOMBRE</th><th>DESCRIPCION</th></tr>";
+            foreach ($mazos as $b){
+                $pagina = $pagina."<tr><td>".$b['nombre_mazo'].":</td><td>  ".$b['descripcion']."</td></tr>";
+            }
+        }
+        $pagina= $pagina."</table> <button id='bcrearb'>Crear Baraja</button>";
+        echo $pagina;
+    }
+    
+    function barajaCrear(){
+        $pagina= $this->cargar("vista/v.creabaraja.php");
+        $contenido="";
+        $baraja= new Baraja();
+        $cartas= $baraja->coleccion();
+        
+        foreach ($cartas as $carta){
+            $propiedades= $baraja->carta($carta['id_carta']);
+            $plantilla=$this->cargar("vista/v.carta.php");
+            $plantilla= preg_replace('/\#CARTA\#/ms',$carta['id_carta'],$plantilla);
+            $plantilla= preg_replace('/\#IMAGEN\#/ms',$propiedades[0]['imagen'],$plantilla);
+            $plantilla= preg_replace('/\#CANTIDAD\#/ms',$carta['n_copias'],$plantilla);
+            $contenido= $contenido.$plantilla;
+        }
+        
+        $pagina=preg_replace('/\#COLECCION\#/ms',$contenido,$pagina);
+        echo $pagina;
     }
 }
 ?>
