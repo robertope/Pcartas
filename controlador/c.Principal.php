@@ -267,11 +267,22 @@ class Principal {
             $plantilla= preg_replace('/\#CARTA\#/ms',$carta['id_carta'],$plantilla);
             $plantilla= preg_replace('/\#IMAGEN\#/ms',$propiedades[0]['imagen'],$plantilla);
             $plantilla= preg_replace('/\#CANTIDAD\#/ms',$carta['n_copias'],$plantilla);
+            $plantilla= preg_replace('/\#TIPO\#/ms',$propiedades[0]['tipo'],$plantilla);
             $contenido= $contenido.$plantilla;
         }
         
         $pagina=preg_replace('/\#COLECCION\#/ms',$contenido,$pagina);
         echo $pagina;
+    }
+    
+    function crearMazo($nombre,$descripcion){
+        $baraja= new Baraja();
+       echo $baraja->crearMazo($nombre,$descripcion);
+    }
+    
+    function cartaMazo($id,$copias,$mazo){
+        $baraja= new Baraja();
+        echo $baraja->cartaMazo($id,$copias,$mazo);
     }
 }
 ?>

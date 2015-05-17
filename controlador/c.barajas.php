@@ -32,4 +32,11 @@ class Baraja{
         return$this->conexion->consultar("*", "cartas","id=".$id);
     }
     
+    function crearMazo($nombre,$descripcion){
+        return-$this->conexion->insertar("mazos", "'".$_SESSION['id']."','".$nombre."','".$descripcion."'");
+    }
+    
+    function cartaMazo($id,$copias,$mazo){
+        return $this->conexion->insertar("cartas_mazo",$copias.",'".$_SESSION['id']."','".$mazo."',".$id);
+    }
 }

@@ -6,12 +6,18 @@ $(document).ready(function(){
 var e="";
 var i= 1;
 var victorias=0;
+var puestas= [];
+var cantidad= [];
+var tipos={p:0,l:0,j:0,b:0};
 
 function manejadores(){
 	$("#inses").click(init);
 	$("#cerses").click(close);
 	$("#bnoticias").click(function(){
 		mostrarN(i)
+	});
+	$(".imagen").dblclick(function(){
+		agregar(this);
 	});
 	$("#binicio").click(inicio);
 	$("#breg").click(registro);
@@ -22,10 +28,13 @@ function manejadores(){
 	$("#bforo").click();
 	$("#botonG").click(grafico);
 	mError(e);
-	
 	$(".paquete img").click(function(){
 		mostrarPaquete(this);
 	});
+	$(".poner").click(function(){
+		agregar(this);
+	});
+	$("#guardarMazo").click(validarMazo);
 	
 /*	$("#mail").blur(function(){
 		comprobar($("#mail").val());
@@ -343,6 +352,10 @@ function crear(){
 		  data: 'crear=b',
 		  success: function(result){
 			  $("#contenido").html(result);
+			  var puestas= [];
+			  var cantidad=[];
+			  var tipos=" ";
+			  var tipos={p:0,l:0,j:0,b:0};
 			  manejadores();
 		  },
 		  error: function(){
@@ -350,4 +363,180 @@ function crear(){
 		  }
 		});
 }
+
+//Funcion para arrastrar
+function arrastrar(ev){
+	ev.dataTransfer.setData("text", ev.target.parentNode.parentNode.id);
+}
 	
+function agregar(e){
+	 var data = e.parentNode.id;
+	 agregarCarta(data);
+}
+
+function soltar(ev){
+	 ev.preventDefault();
+	 var data = ev.dataTransfer.getData("text");
+	 agregarCarta(data);
+	 
+}
+
+function agregarCarta(data){
+	$dato= $("#"+data+ " .imagen" );
+	 $numero=$("#"+data+ " .cantidad" );
+	 max= parseInt($numero.attr('max'));
+	 var indice;
+	 var posicion=0;
+	 esta=false;
+	 if(parseInt($numero.val())>0){
+		 for(i=0; i< puestas.length; i++){
+			 if(puestas[i]== data){
+				 cantidad[i]= parseInt(cantidad[i]) + parseInt($numero.val());
+				 posicion= i;
+				 if(cantidad[i]>max){
+					 cantidad[i]=max;
+				 }
+				 esta=true;
+				 break;
+			 }
+		 }
+		 if(esta){
+			 $("#numero"+posicion).html( $dato.html() +"</br><span class='copias'>"+ cantidad[posicion]+"</span><input type='hidden' value='"+ $("#"+data+" .tipo").val() + "'><input type='hidden' value='"+data+"' class='id'>");
+			 tipoCarta= $("#"+data+" .tipo").val();
+			 switch(tipoCarta){
+			 case "p":
+				 tipos['p']= parseInt(tipos['p'])+ parseInt(cantidad[posicion]);
+				 break;
+			 case "l":
+				 tipos['l']= parseInt(tipos['l'])+ parseInt(cantidad[posicion]);
+				 break;
+			 case "j":
+				 tipos['j']= parseInt(tipos['j'])+ parseInt(cantidad[posicion]);
+				 break;
+			 case "b":
+				 tipos['b']= parseInt(tipos['b'])+ parseInt(cantidad[posicion]);
+				 break;
+			 }
+		 }else{
+			 indice=puestas.length;	 
+			 puestas[indice]=data;
+			 cantidad[indice]=$numero.val();
+			 carta= "<div id='numero"+indice+"' ondblclick='quitar(this)'>" + $dato.html() +"</br><span class='copias'>"+ $numero.val() +"</span><input type='hidden' value='"+ $("#"+data+" .tipo").val() + "'><input type='hidden' value='"+data+"' class='id'></div>";
+			 $("#puestas").html($("#puestas").html()+carta);
+			 tipoCarta= $("#"+data+" .tipo").val();
+			 switch(tipoCarta){
+			 case "p":
+				 tipos['p']= parseInt(tipos['p'])+ parseInt($numero.val());
+				 break;
+			 case "l":
+				 tipos['l']= parseInt(tipos['l'])+ parseInt($numero.val());
+				 break;
+			 case "j":
+				 tipos['j']= parseInt(tipos['j'])+ parseInt($numero.val());
+				 break;
+			 case "b":
+				 tipos['b']= parseInt(tipos['b'])+ parseInt($numero.val());
+				 break;
+			 }
+		 }
+	 }
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function maximo(e){
+	if(parseInt(e.value) > parseInt(e.getAttribute('max'))){
+		e.value= e.getAttribute('max');
+	}
+}
+
+function validarMazo(){
+	if($("#nombreMazo").val().trim()==""){
+		alert("El nombre no puede estar vacio");
+		return false;
+	}else{
+		if(tipos['p']<10){
+			alert("faltan "+ (10-tipos['p'])+" cartas de personaje");
+			return false;
+		}else if(tipos['p']>10){
+			alert("sobran "+ (tipos['p']-10)+" cartas de personaje");
+			return false;
+		}else{
+			if(tipos['l']<30){
+				alert("faltan "+ (30-tipos['l'])+" cartas de localizaciones");
+				return false;
+			}else{
+				if(tipos['j']<40){
+					alert("faltan "+ (40-tipos['j'])+" cartas de juego");
+					return false;
+				}else{
+					if(tipos['b']<1){
+						alert("falta 1 carta de base");
+						return false;
+					}else if (tipos['b']>1){
+						alert("sobran "+ (tipos['b']-1)+" cartas de base");
+						return false;
+					}else{
+						guardarMazo();
+					}
+				}
+			}
+		}
+	}
+}
+
+function guardarMazo(){
+	nombre = $("#nombreMazo").val();
+	descripcion= $("#descMazo").val();
+	$.ajax({
+		  url: 'index.php',
+		  global:false,
+		  type: 'POST',
+		  async: true,
+		  data: 'nMazo='+nombre+"&descMazo="+descripcion,
+		  success: function(result){
+			  guardarMazo2(nombre);
+		  },
+		  error: function(){
+			  alert("error");
+		  }
+		});
+}
+
+function guardarMazo2(mazo){
+	ventana=document.getElementById('puestas');
+	divs= ventana.getElementsByTagName('DIV');
+	for(i=0;i<divs.length;i++){
+		id= divs[i].getElementsByClassName('id');
+		copias= divs[i].getElementsByClassName('copias');
+		alert(copias[0].innerHTML +" "+id[0].value);
+		$.ajax({
+			  url: 'index.php',
+			  global:false,
+			  type: 'POST',
+			  async: true,
+			  data: 'cid='+id[0].value+"&copias="+copias[0].innerHTML+"&mazo="+mazo,
+			  success: function(result){
+			  },
+			  error: function(){
+				  alert("error");
+			  }
+			});
+	}
+	alert('ok');
+}
+
+function quitar(e){
+	longitud=e.id.length-1;
+	elemento= e.id.substring(longitud);
+	cantidad[elemento]--;
+	tipo=$("#"+e.id+ " input").val();
+	tipos[tipo]--;
+	if(cantidad[elemento]>0){
+		$("#"+e.id+ " span").html(cantidad[elemento]);
+	}else{
+		$("#"+e.id).html("");
+	}
+}

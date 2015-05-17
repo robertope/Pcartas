@@ -137,3 +137,24 @@ footer{
 	width: 150px;
 	margin: 5px;
 }
+#puestas{
+	float: left;
+	border: 2px solid black;
+	min-width: 100px; 
+	max-width:250px;
+	height: 100%;
+}
+#puestas div{
+	display: inline-block;
+}
+#coleccion img{
+	width: 200px;
+	height: 200px;
+}
+#coleccion div{
+	display: inline-block;
+}
+#puestas img{
+	width: 100px;
+	height: 100px;
+}
