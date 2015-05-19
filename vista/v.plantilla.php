@@ -17,6 +17,7 @@
 			<nav id="login">#LOGIN#</nav>
 			<!-- Zona para los apartados de redes sociales -->
 			<nav id="redes">#REDES#</nav>
+			<nav id="redes2">#REDES2#</nav>
 			<!--  zona para los contenidos  -->
 			<div id="contenido">
 				#CONTENIDO#

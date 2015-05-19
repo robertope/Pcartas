@@ -35,7 +35,7 @@ function manejadores(){
 		agregar(this);
 	});
 	$("#guardarMazo").click(validarMazo);
-	
+	manejadores2();
 /*	$("#mail").blur(function(){
 		comprobar($("#mail").val());
 	})*/
@@ -120,11 +120,13 @@ function close(){
 		  data: 'c=c',
 		  success: function(result){
 			  $("body").html(result);
+			  location.reload();
 		  },
 		  error: function(){
 			  alert("error");
 		  }
 		});
+
 }
 
 //Funcion para validar el formulario de inscripcion

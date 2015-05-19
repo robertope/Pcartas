@@ -28,7 +28,7 @@ class Principal {
     private function plantilla($estilo="",$titulo="",$pie="",$botones="",$title=""){
         //Cargamos la plantilla en una variable
         $pagina= $this->cargar("vista/v.plantilla.php");
-        $pagina=$pagina."<script src='http://code.jquery.com/jquery-1.10.1.min.js'></script><script src='js/index.js'></script>";
+        $pagina=$pagina."<script src='http://code.jquery.com/jquery-1.10.1.min.js'></script><script src='js/index.js'></script></script><script src='js/estilo.js'></script>";
         if($estilo==""){
             $pagina= preg_replace('/\#ESTILO\#/ms', "vista/css/".Config::$css, $pagina);
         }
@@ -57,7 +57,17 @@ class Principal {
         }else{
             $pagina= preg_replace('/\#LOGIN\#/ms', $this->cargar("vista/v.login.php"), $pagina);
         }
-        $pagina= preg_replace('/\#REDES\#/ms', $this->cargar("plugin/paypal/boton.donacion.php"), $pagina);
+        $redes2="";
+        $redes="";
+        $redes=$redes.$this->cargar("plugin/facebook/comentarios.php");
+        $redes= $redes. $this->cargar("plugin/facebook/seguir.php");
+        $redes2= $redes2. $this->cargar("plugin/twitter/hastag.php");
+        $redes2= $redes2. $this->cargar("plugin/twitter/follow.php");
+        $redes2= $redes2. $this->cargar("plugin/google/googleplus.php");
+        $redes= $redes. $this->cargar("plugin/facebook/botonLike.php");
+        $redes= $redes. $this->cargar("plugin/paypal/boton.donacion.php");
+        $pagina= preg_replace('/\#REDES\#/ms',$redes , $pagina);
+        $pagina= preg_replace('/\#REDES2\#/ms',$redes2 , $pagina);
         if(isset($_SESSION['error'])){
             $script="<script> e='". $_SESSION['error']."'; </script>";
             $_SESSION['error']=" ";

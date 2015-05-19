@@ -7,6 +7,7 @@ body{
 	width: 99%;
 }
 
+
 header img{
 	height: 100%;
 	width: 100%;
@@ -54,11 +55,22 @@ footer{
 #redes{
 	color: white;
 	position:absolute;
-	margin-top:10%;
+	margin-top:5%;
 	height: 60%;
 	width: 15%;
 }
 
+.fb-comments{
+	width: 100%;
+}
+#redes2{
+	color: white;
+	position:absolute;
+	margin-top:5%;
+	height: 60%;
+	width: 15%;
+	margin-left: 83%;
+}
 #contenido{
 	overflow:auto;
 	color:white;
@@ -157,4 +169,8 @@ footer{
 #puestas img{
 	width: 100px;
 	height: 100px;
+}
+#facebook{
+	overflow: hidden;
+	width: 100%;
 }

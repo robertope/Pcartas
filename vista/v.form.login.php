@@ -11,5 +11,4 @@
     <br/>
     <input type="submit" value="Iniciar" name="ini">
     <input type="submit" value="Registrarse" name="reg">
-    
 </form>
