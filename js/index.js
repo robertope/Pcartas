@@ -1,6 +1,21 @@
 //Agregamos los manejadores
 $(document).ready(function(){
 	manejadores();
+	$("#bforo").click(foro);
+	$(window).on("resize",comprobarT);
+	$("#binicio").click(inicio);
+	$("#btienda").click(tienda);
+	$("#bbarajas").click(baraja);
+	$("#inses").click(init);
+	$("#cerses").click(close);
+	$("#breg").click(registro);
+	$("#bperfil").click(perfil);
+	$("#bnoticias").click(function(){
+		mostrarN(i)
+	});
+	$("#icofbk").on("click",mostrarF);
+	$("#icotwt").on("click",mostrarT);
+	$("#bmenu").on("click",mostrarM);
 });
 
 var e="";
@@ -11,22 +26,12 @@ var cantidad= [];
 var tipos={p:0,l:0,j:0,b:0};
 
 function manejadores(){
-	$("#inses").click(init);
-	$("#cerses").click(close);
-	$("#bnoticias").click(function(){
-		mostrarN(i)
-	});
 	$(".imagen").dblclick(function(){
 		agregar(this);
 	});
-	$("#binicio").click(inicio);
-	$("#breg").click(registro);
-	$("#bperfil").click(perfil);
-	$("#btienda").click(tienda);
-	$("#bbarajas").click(baraja);
 	$("#bcrearb").click(crear);
-	$("#bforo").click();
 	$("#botonG").click(grafico);
+	$("#Cnoticia").click(Cnoticia);
 	mError(e);
 	$(".paquete img").click(function(){
 		mostrarPaquete(this);
@@ -34,13 +39,19 @@ function manejadores(){
 	$(".poner").click(function(){
 		agregar(this);
 	});
+	$(".quitar").click(function(){
+		quitar(this);
+	});
 	$("#guardarMazo").click(validarMazo);
+	$()
 	manejadores2();
 /*	$("#mail").blur(function(){
 		comprobar($("#mail").val());
 	})*/
 }
 
+function borrarManejadores(){
+}
 
 //Funcion para cargar el registro
 function registro(){
@@ -79,6 +90,23 @@ function inicio(){
 		});	
 }
 
+function foro(){
+	$.ajax({
+		  url: 'vista/pages/v.foro.php',
+		  global:false,
+		  type: 'GET',
+		  async: true,
+		  data: '',
+		  success: function(result){
+			  $("#contenido").html(result);
+			  manejadores();
+		  },
+		  error: function(){
+			  alert("error");
+		  }
+		});	
+}
+
 //Funcion que muestra el login en el div de contenido
 function init(){
 	$.ajax({
@@ -101,6 +129,7 @@ function init(){
 function mError(e){
 	if(e.trim()!=""){
 		var boton= "<br/><input type='button' value='OK' onclick='cerrar(this)'/>";
+		$("#error").css({"background-color": "white","z-index":"9999999999","font-size":"3em","left":"30%"});
 		$("#error").html(e+boton);
 	}
 }
@@ -108,6 +137,7 @@ function mError(e){
 //Funcion que hace desaparecer las ventanas "emergentes"
 function cerrar(e){
 	$(e).parent().hide("slow");
+	$("#error").css({"background-color": "transparent","z-index":"0","left":"0%"});
 }
 
 //Funcion para el cierre de la sesion
@@ -183,6 +213,23 @@ function mostrarN(i){
 		});
 }
 
+//Funcion para crear una nueva noticia
+function Cnoticia(){
+	$.ajax({
+	url: 'index.php',
+	  global:false,
+	  type: 'GET',
+	  async: true,
+	  data: 'nc=b',
+	  success: function(result){
+		  $("#contenido").html(result);
+		  manejadores();
+	  },
+	  error: function(){
+		  alert("error");
+	  }
+	});
+}
 //Funcion que comprueba si un mail esta en la BD
 function comprobar(mail){
 	$.ajax({
@@ -257,15 +304,17 @@ function mostrarPaquete(e){
 	$("#"+elemento).show(1000);
 	$("#"+elemento+" #bCerrar").click(function(){
 		$("#"+elemento).hide(1000);
+		$("#"+elemento+" #bDinero").off("click");
+		$("#"+elemento+" #bMonedas").off("click");
 	});
-	$("#"+elemento+" #bMonedas").click(function(){
+	$("#"+elemento+" #bMonedas").on("click",function(){
 		if(confirm("¿Quieres comprar este paquete con monedas?")){
 			if(confirm("¿Seguro?")){
 				pagar("m",elemento);
 			}
 		}
 	});
-	$("#"+elemento+" #bDinero").click(function(){
+	$("#"+elemento+" #bDinero").on("click",function(){
 		if(confirm("¿Quieres comprar este paquete con Dinero?")){
 			if(confirm("¿Seguro?")){
 				pagar("d",elemento);
@@ -279,12 +328,10 @@ function mostrarPaquete(e){
 function grafico(){
 	can= document.getElementById("grafico");
 	var ctx=can.getContext("2d");
-	derrotas= 360-victorias;
 	rad= (Math.PI/180)*victorias;
-	rad2= (Math.PI/180)*derrotas;
 	ctx.beginPath();
 	ctx.moveTo(75,75);
-	ctx.arc(75,75,60,0,rad,true);
+	ctx.arc(75,75,60,0,rad,false);
 	ctx.lineWidth=3
 	ctx.fillStyle="green";
 	ctx.closePath();
@@ -295,7 +342,7 @@ function grafico(){
 	ctx2.fillStyle="red";
 	ctx2.beginPath();
 	ctx2.moveTo(75,75);
-	ctx2.arc(75,75,60,0,rad2,false);
+	ctx2.arc(75,75,60,rad,2*Math.PI,false);
 	ctx2.closePath();
 	ctx2.stroke();
 	ctx2.fill();
@@ -372,6 +419,7 @@ function arrastrar(ev){
 }
 	
 function agregar(e){
+
 	 var data = e.parentNode.id;
 	 agregarCarta(data);
 }
@@ -423,7 +471,7 @@ function agregarCarta(data){
 			 indice=puestas.length;	 
 			 puestas[indice]=data;
 			 cantidad[indice]=$numero.val();
-			 carta= "<div id='numero"+indice+"' ondblclick='quitar(this)'>" + $dato.html() +"</br><span class='copias'>"+ $numero.val() +"</span><input type='hidden' value='"+ $("#"+data+" .tipo").val() + "'><input type='hidden' value='"+data+"' class='id'></div>";
+			 carta= "<div id='numero"+indice+"' onclick='mostrar(this)'>" + $dato.html() +"</br><span class='copias'>"+ $numero.val() +"</span><input type='hidden' value='"+ $("#"+data+" .tipo").val() + "'><input type='hidden' value='"+data+"' class='id'></div>";
 			 $("#puestas").html($("#puestas").html()+carta);
 			 tipoCarta= $("#"+data+" .tipo").val();
 			 switch(tipoCarta){
@@ -513,7 +561,6 @@ function guardarMazo2(mazo){
 	for(i=0;i<divs.length;i++){
 		id= divs[i].getElementsByClassName('id');
 		copias= divs[i].getElementsByClassName('copias');
-		alert(copias[0].innerHTML +" "+id[0].value);
 		$.ajax({
 			  url: 'index.php',
 			  global:false,
@@ -527,10 +574,23 @@ function guardarMazo2(mazo){
 			  }
 			});
 	}
-	alert('ok');
+	baraja();
 }
 
-function quitar(e){
+function quitar(d){
+	idCarta= d.parentNode.id;
+	e="";
+	esta=false;
+	cpuestas= document.getElementById('puestas');
+	cartasPuestas= cpuestas.getElementsByTagName('DIV');
+	for(i=0;i<cartasPuestas.length;i++){
+		div=cartasPuestas[i].getElementsByClassName('id');
+		if(div[0].value == idCarta){
+			e=cartasPuestas[i];
+			esta=true;
+			break;
+		}
+	}
 	longitud=e.id.length-1;
 	elemento= e.id.substring(longitud);
 	cantidad[elemento]--;
@@ -542,3 +602,4 @@ function quitar(e){
 		$("#"+e.id).html("");
 	}
 }
+

@@ -17,7 +17,7 @@ class Usuario{
     
     public function porcentaje($maximo,$referencia,$valor){
         if($maximo>0 && $referencia>0 && $valor >0){
-            $resultado = ($valor*$referencia)/$maximo;
+            $resultado  = ($valor*$referencia)/$maximo;
             return $resultado;
         }else{
             return 0;
@@ -39,5 +39,18 @@ class Usuario{
         $resultado[3]=$perdidas;
         $resultado[4]=$jugadas;
         return $resultado;
+    }
+    
+    public function cambiarAvatar($imagen,$res){
+        if($res[0]['avatar']==null){
+            $this->conexion->modificar("jugadores","avatar","'".$imagen."'","id='".$_SESSION['id']."'");
+            $_SESSION['error']="Avatar creado con éxito";
+            header("location:index.php");
+        }else{
+            unlink("img/avatar/".$res[0]['avatar']);
+            $this->conexion->modificar("jugadores","avatar","'".$imagen."'","id='".$_SESSION['id']."'");
+            $_SESSION['error']="Avatar modificado con éxito";
+            header("location:index.php");
+        }
     }
 }

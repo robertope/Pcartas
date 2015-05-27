@@ -38,7 +38,12 @@ class Principal {
         }
         if($pie==""){
             $pie=$this->cargar("vista/v.pie.php");
-            $pagina= preg_replace('/\#PIE\#/ms', $pie, $pagina);
+            $redes=$this->cargar("vista/v.redes.php");
+            $redes=preg_replace('/\#1\#/ms',$this->cargar("plugin/facebook/botonLike.php"),$redes);
+            $redes=preg_replace('/\#2\#/ms',$this->cargar("plugin/paypal/boton.donacion.php"),$redes);
+            $redes=preg_replace('/\#3\#/ms',$this->cargar("plugin/twitter/follow.php"),$redes);
+            $redes=preg_replace('/\#4\#/ms',$this->cargar("plugin/google/googleplus.php"),$redes);
+            $pagina= preg_replace('/\#PIE\#/ms', $pie.$redes, $pagina);
         }
         if($botones==""){
             if(isset($_SESSION['id'])&& $_SESSION['id']!= " "){
@@ -62,10 +67,7 @@ class Principal {
         $redes=$redes.$this->cargar("plugin/facebook/comentarios.php");
         $redes= $redes. $this->cargar("plugin/facebook/seguir.php");
         $redes2= $redes2. $this->cargar("plugin/twitter/hastag.php");
-        $redes2= $redes2. $this->cargar("plugin/twitter/follow.php");
-        $redes2= $redes2. $this->cargar("plugin/google/googleplus.php");
-        $redes= $redes. $this->cargar("plugin/facebook/botonLike.php");
-        $redes= $redes. $this->cargar("plugin/paypal/boton.donacion.php");
+
         $pagina= preg_replace('/\#REDES\#/ms',$redes , $pagina);
         $pagina= preg_replace('/\#REDES2\#/ms',$redes2 , $pagina);
         if(isset($_SESSION['error'])){
@@ -183,6 +185,17 @@ class Principal {
            
     }
     
+    //Funcion para crear un noticia nueva
+    public function crearNoticia(){
+        echo $this->cargar("vista/v.crearNoticia.php");
+    }
+    
+    //Funcion para guardar la noticia
+    public function guardarNoticia($nombre,$noticia){
+        $noticias= new Noticias();
+    
+        $noticias->guardar($nombre,$noticia);
+    }
     //Funcion para activar la cuenta de usuario
     public function activarR($codigo){
         $reg= new Registro();
@@ -225,6 +238,15 @@ class Principal {
         
     }
     
+    //Funcion para cambiar el avatar
+    public function cambiarAvatar($imagen){
+        $sesion = new Sesion();
+        $usuario = new Usuario();
+        $res = $sesion->mantenerS();
+        $usuario->cambiarAvatar($imagen,$res);
+        
+    }
+    
     //Funcion para mostrar la tienda
     public function mostrarTienda(){
         $tienda = new Tienda();
@@ -256,12 +278,12 @@ class Principal {
         if(count($mazos)==0){
             $pagina= "No tienes creada ninguna baraja<br>";
         }else{
-            $pagina="<table><tr><th>NOMBRE</th><th>DESCRIPCION</th></tr>";
+            $pagina="<div id='barajas'><table><tr><th>NOMBRE</th><th>DESCRIPCION</th></tr>";
             foreach ($mazos as $b){
-                $pagina = $pagina."<tr><td>".$b['nombre_mazo'].":</td><td>  ".$b['descripcion']."</td></tr>";
+                $pagina = $pagina."<tr><td><span>".$b['nombre_mazo'].":</span></td><td>  ".$b['descripcion']."</td></tr>";
             }
         }
-        $pagina= $pagina."</table> <button id='bcrearb'>Crear Baraja</button>";
+        $pagina= $pagina."</table></div> <button id='bcrearb'>Crear Baraja</button>";
         echo $pagina;
     }
     

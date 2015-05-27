@@ -32,6 +32,12 @@ class Noticias{
         if(($n+1)<$nNoti){
             $pagina=$pagina."...<a href='index.php?n=".($n+1)."'>".($n+1)."</a><a href='index.php?n=".$nNoti."'>"."&gt;&gt;</a>";
         }
+        if (isset($_SESSION['id'])){
+            $result=$this->conexion->consultar("*","admins","name='".$_SESSION['id']."'");
+            if(count($result)==1){
+                $pagina=$pagina."</br><button id='Cnoticia'> Crear Noticia</button>";
+            }
+        }
         echo $pagina;
     }
     
@@ -42,6 +48,17 @@ class Noticias{
             return $res;
         }else{
             return false;
+        }
+    }
+    
+    public function guardar($nombre,$noticia){
+        $result=$this->conexion->consultar("*","admins","name='".$_SESSION['id']."'");
+        if(count($result)==1){
+            $fecha= date("Y-m-d H:i:s",time());
+            $this->conexion->insertar("noticia", "'".$fecha."','".$nombre."','".$noticia."'","fecha,titulo,contenido");
+            $_SESSION['error']="Noticia Publicada con exito";
+        }else{
+            $_SESSION['error']="Error al publicar la noticia";
         }
     }
 }

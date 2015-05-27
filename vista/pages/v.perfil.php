@@ -5,6 +5,15 @@
         <th>#IMAGEN#</th>
     </tr>
     <tr>
+        <td><span>Cambiar avatar</span> (JPG, 1Mb max)</td>
+        <td>
+            <form action="index.php" method="post" enctype="multipart/form-data">
+                <input name="avatar" type="file"/>
+                <input type="submit" value="Cambiar" name="Cavatar"/>
+            </form>
+        </td>
+    </tr>
+    <tr>
         <td><span>Correo:</span></td>
         <td>#CORREO#</td>
     </tr>

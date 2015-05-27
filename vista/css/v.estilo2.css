@@ -2,7 +2,191 @@
 
 /*ANIMACIONES*/
 
+@keyframes facebook{
+	0%{
+		width: 1px;
+		height: 1px;
+	}
+	100%{
+		width: 550px;
+		height: 150px;
+	}
+}
 
+@keyframes facebook2{
+	0%{
+		width: 550px;
+		height: 150px;
+	}
+	100%{
+		width: 0px;
+		height:0px;
+	}
+}
+
+@keyframes icofacebook{
+	0%{
+		top:35%
+	}
+	100%{
+		top:15%;
+	}
+}
+
+@keyframes icofacebook2{
+	0%{
+		top:15%
+	}
+	100%{
+		top: 35%;
+	}
+}
+
+@keyframes twitter{
+	0%{
+		width: 1px;
+		height: 1px;
+	}
+	100%{
+		width: 550px;
+		height: 550px;
+	}
+}
+
+@keyframes twitter2{
+	0%{
+		width: 550px;
+		height: 550px;
+	}
+	100%{
+		width: 0px;
+		height:0px;
+	}
+}
+
+@keyframes menu1{
+	0%{
+		width: 0%;
+		height: 0%;
+	}
+	100%{
+		width: 100%;
+		height:100%;
+	}
+}
+
+@keyframes menu2{
+	0%{
+		width: 100%;
+		height: 100%;
+	}
+	100%{
+		width: 0%;
+		height:0%;
+	}
+}
+
+@-webkit-keyframes facebook{
+	0%{
+		width: 1px;
+		height: 1px;
+	}
+	100%{
+		width: 550px;
+		height: 150px;
+	}
+}
+
+@-webkit-keyframes facebook2{
+	0%{
+		width: 550px;
+		height: 150px;
+	}
+	100%{
+		width: 0px;
+		height:0px;
+	}
+}
+
+@-webkit-keyframes icofacebook{
+	0%{
+		top:35%
+	}
+	100%{
+		top:15%;
+	}
+}
+
+@-webkit-keyframes icofacebook2{
+	0%{
+		top:15%
+	}
+	100%{
+		top: 35%;
+	}
+}
+
+@-webkit-keyframes twitter{
+	0%{
+		width: 1px;
+		height: 1px;
+	}
+	100%{
+		width: 550px;
+		height: 550px;
+	}
+}
+
+
+@-webkit-keyframes twitter2{
+	0%{
+		width: 550px;
+		height: 550px;
+	}
+	100%{
+		width: 0px;
+		height:0px;
+	}
+}
+
+@-webkit-keyframes menu1{
+	0%{
+		width: 0%;
+		height: 0%;
+	}
+	100%{
+		width: 100%;
+		height:100%;
+	}
+}
+
+@-webkit-keyframes menu2{
+	0%{
+		width: 100%;
+		height: 100%;
+	}
+	100%{
+		width: 0%;
+		height:0%;
+	}
+}
+
+#error{
+	position: absolute;
+}
+
+#coleccion *{
+	padding:15px;	
+}
+
+#contenido table{
+	margin: auto;
+	color:white;
+}
+
+#contenido form *{
+	margin: 3px;
+}
 
 #botones a:hover{
 	color:red;
@@ -29,10 +213,499 @@ header img{
 }
 
 .descripcion2 img:hover{
-	overflow:visible;
+
 	transform: scale(3,3);
 }
 
+#icofbk{
+		visibility:visible;
+		position:fixed;
+		top:35%;
+		left: 0%;
+	}
+
+#facebook{
+	position: fixed;
+	top:25%;
+	left:0%;
+	width: 0px;
+	height: 0px;
+	overflow: hidden;
+}
+
+#icofbk img{
+	width: 50px;
+	height: 50px;
+}
+
+footer{
+	color:white;
+  	position: absolute;
+  	overflow: hidden;
+  	top: 100%;
+ 	text-align: center;
+}
+
+footer td{
+	padding: 10px;
+}
+
+#tperfil img{
+	height: 100px;
+	width: 100px;
+	border-radius: 100%;
+	
+}
+td span{
+	font-weight: bolder;
+	text-decoration: underline;
+}
+
+th{
+	font-size: 2em;
+	text-transform: uppercase;
+}
+
+#noticia{	
+		border-style: ridge;
+		border-color: white;
+		border-width:5px;
+		margin:10px;
+		border-radius: 100%;
+		text-align: center;	
+}
+
+#barajas *{
+	padding: 15px;
+}
+
+#barajas th{
+	text-decoration: underline;
+}
+
+#barajas table{
+	margin:auto;
+
+}
+
+#nTitulo{
+	font-size: 3em;
+	text-transform:uppercase;
+	text-decoration: underline;
+}
+
+#noticia p{
+	max-width: 50%;
+	text-align: center;
+	margin-left: 25%;
+}
+
+#noticia a:hover{
+	color:red;	
+}
+
+#noticia a{
+	color: white;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+/*PANTALLA PEQUEÑA*/
+@media all and (max-width:624px) and (min-width:1px){
+	#login{
+		color: white;
+		font-size:1em;
+		position:absolute;
+		margin-left:70%;
+		box-shadow: 0px 10px 50px white;
+		border-radius: 100%;	
+	}
+	
+	#login a:hover{
+			color:red;
+			box-shadow: 0px 10px 30px red;
+	}
+	
+	#botones{
+	position:absolute;
+		margin-left:35%;
+		margin-top:3%;
+		color: white;
+	}
+	
+	#botones span:hover{
+	color:red;
+	box-shadow: 0px 10px 50px red;
+	}
+	
+	
+	#botones span{
+	visibility:visible;
+	display:block;
+	font-size: 1.5em;
+	margin: 10px;
+	padding:3px;
+	box-shadow: 0px 10px 50px white;
+	border-radius: 100%;
+	
+	}
+	
+
+	#botones a{
+		visibility: hidden;
+		display:block;
+		font-size: 1.5em;
+		margin: 10px;
+		padding:3px;
+		box-shadow: 0px 10px 50px white;
+		border-radius: 100%;
+	}
+	
+	header{
+		position:absolute;
+		margin-top: 3%;
+		margin-left: 0%;
+		width: 100px;
+		height: 50px;
+	}
+	
+	#bzonausu{
+		font-size:0.7em;
+		display:inline;
+		padding: 3px;
+		padding-top:10px;
+		color: white;
+		width: auto;
+	}
+	
+	#bzonausu span, #bzonausu a{
+		padding:5px;
+		border-style: ridge;
+		border-color: white;
+		border-width:3px;
+		margin:3px;
+	}
+	
+	#bzonausu a:hover{
+		border-color: red;
+		color: red;
+	}
+	
+	#redes{
+		color: white;
+		position:absolute;
+		margin-top:10%;
+		height: 60%;
+		width: 15%;
+	}
+	
+	#redes2 iframe{
+		position: absolute;
+		height: 0px;
+		width: 0px;
+	}
+	
+	#icotwt{
+		visibility:visible;
+		position:fixed;
+		top:25%;
+		left: 0%;
+	}
+	
+	#icotwt img{
+		height: 25px;
+		width: 25px;
+	}
+	#icofbk img{
+	width: 25px;
+	height: 25px;
+}
+	
+	#contenido{
+		overflow:auto;
+		color:white;
+		position:absolute;
+		margin-top:30%;
+		margin-left: 10%;
+		height: 60%;
+		width: 80%;	
+	}
+	footer{
+    	left: 15%;
+	}	
+	.paquete img{
+		height: 150px;
+		width: 75px;
+	}
+	
+	.paquete{
+		 border: 5px solid red;
+		 padding: 10px;
+		margin:15px;
+		display:inline-block;
+	}
+	
+	.mPaquete{
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		background-color: white;
+	}
+	
+	.descripcion{
+		overflow:auto;
+		color:black;
+		text-align: center;
+	}
+	
+	.mPaquete img{
+		float:left;
+	}
+	
+	.mPaquete button{
+		top:80%;
+	}
+	.descripcion2{
+		margin:10px;
+		font-size:3em;
+		position: absolute;
+		margin:50px;
+		top:80px;
+		height:80%;
+		width: 100%;
+		overflow:visible;
+		color:black;
+		text-align: left;
+		background-color: white;
+	}
+	
+	.descripcion2 img{
+		float:none;
+		height: 50px;
+		width: 50px;
+		margin: 3px;
+	}
+	#puestas{
+		float: left;
+		border: 2px solid black;
+		min-width: 100px; 
+		max-width:100px;
+		height: 100%;
+	}
+	#puestas div{
+		display: inline-block;
+	}
+	#coleccion img{
+		width: 75px;
+		height: 75px;
+	}
+	
+	#coleccion input{
+		font-size: 0.7em;
+	}
+	
+	#coleccion div{
+		display: inline-block;
+		font-size:0.7em;
+	}
+	#puestas img{
+		width: 50px;
+		height: 50px;
+	}
+
+}
+
+/*PANTALLA MEDIANA 2*/
+@media all and (max-width:1199px) and (min-width:625px){
+	#login{
+		color: white;
+		font-size:1.5em;
+		position:absolute;
+		margin-left:70%;
+		box-shadow: 0px 10px 50px white;
+		border-radius: 100%;	
+	}
+	
+	#login a:hover{
+		color:red;
+		box-shadow: 0px 10px 30px red;
+	}
+	
+	#botones{
+		position:absolute;
+		margin-left:35%;
+		margin-top:3%;
+		color: white;
+	}
+	
+	#botones span{
+		visibility:visible;
+		display:block;
+		font-size: 1.5em;
+		margin: 10px;
+		padding:3px;
+		box-shadow: 0px 10px 50px white;
+		border-radius: 100%;
+	
+	}
+	#botones span:hover{
+		color:red;
+		box-shadow: 0px 10px 50px red;
+	}
+	
+
+	#botones a{
+		visibility: hidden;
+		display:block;
+		font-size: 1.5em;
+		margin: 10px;
+		padding:3px;
+		box-shadow: 0px 10px 50px white;
+		border-radius: 100%;
+	}
+	
+	header{
+		position:absolute;
+		margin-top: 3%;
+		margin-left: 0%;
+		width: 200px;
+		height: 70px;
+	}
+	
+	#bzonausu{
+		display:inline;
+		padding: 3px;
+		padding-top:10px;
+		color: white;
+		width: auto;
+	}
+	
+	#bzonausu span, #bzonausu a{
+		padding:5px;
+		border-style: ridge;
+		border-color: white;
+		border-width:5px;
+		margin:10px;
+	}
+	
+	#bzonausu a:hover {
+		border-color: red;
+		color: red;
+	}
+	
+	#redes{
+		color: white;
+		position:absolute;
+		margin-top:10%;
+		height: 60%;
+		width: 15%;
+	}
+	
+	#redes2 iframe{
+		position: absolute;
+		height: 0px;
+		width: 0px;
+	}
+	
+	#icotwt{
+		visibility:visible;
+		position:fixed;
+		top:25%;
+		left: 0%;
+	}
+	
+	#icotwt img{
+		height: 50px;
+		width: 50px;
+	}
+	
+	#contenido{
+		overflow:auto;
+		color:white;
+		position:absolute;
+		margin-top:15%;
+		margin-left: 10%;
+		height: 60%;
+		width: 80%;	
+	}
+	footer{
+    	left: 15%;
+	}	
+	.paquete img{
+		height: 250px;
+		width: 150px;
+	}
+	
+	.paquete{
+		 border: 5px solid red;
+		 padding: 10px;
+		margin:15px;
+		display:inline-block;
+	}
+	
+	.mPaquete{
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		background-color: white;
+	}
+	
+	.descripcion{
+		overflow:auto;
+		color:black;
+		text-align: center;
+	}
+	
+	.mPaquete img{
+		float:left;
+	}
+	
+	.mPaquete button{
+		top:80%;
+	}
+	.descripcion2{
+		margin:10px;
+		font-size:5em;
+		position: absolute;
+		margin:50px;
+		top:80px;
+		height:80%;
+		width: 100%;
+		overflow:visible;
+		color:black;
+		text-align: left;
+		background-color: white;
+	}
+	
+	.descripcion2 img{
+		float:none;
+		height: 75px;
+		width: 75px;
+		margin: 5px;
+	}
+	#puestas{
+		float: left;
+		border: 2px solid black;
+		min-width: 100px; 
+		max-width:100px;
+		height: 100%;
+	}
+	#puestas div{
+		display: inline-block;
+	}
+	#coleccion img{
+		width: 150px;
+		height: 150px;
+	}
+	#coleccion div{
+		display: inline-block;
+	}
+	#puestas img{
+		width: 50px;
+		height: 50px;
+	}
+}
+/*PANTALLA MEDIANA 1*/
 @media all and (max-width:1650px) and (min-width:1200px){
 	#login{
 		color: white;
@@ -50,10 +723,17 @@ header img{
 	
 	#botones{
 	position:absolute;
-		margin-left:25%;
+		margin-left:20%;
 		margin-top:3%;
 		color: white;
 	}
+	
+		#botones span{
+		visibility: hidden;
+		height: 0px;
+		width: 0px;
+	}
+	
 
 	#botones a{
 		font-size: 3em;
@@ -93,11 +773,36 @@ header img{
 	}
 	
 	#redes{
-		display: none;
+		color: white;
+		position:absolute;
+		margin-top:10%;
+		height: 60%;
+		width: 15%;
 	}
 	
 	#redes2{
-		display: none;
+		position: absolute;
+		top: 20%;
+		left: 25%;
+	}
+	
+	#redes2 iframe{
+		position: absolute;
+		left: 25%;
+		height: 0px;
+		width: 0px;
+	}
+	
+	#icotwt{
+		visibility:visible;
+		position:fixed;
+		top:25%;
+		left:0%;
+	}
+	
+	#icotwt img{
+		height: 50px;
+		width: 50px;
 	}
 	
 	#contenido{
@@ -111,12 +816,8 @@ header img{
 	}
 	
 	footer{
-		color:white;
-    	position: absolute;
-    	overflow: hidden;
     	left: 30%;
-    	top: 90%;
-    	text-align: center;
+
 	}
 	
 	.paquete img{
@@ -155,8 +856,9 @@ header img{
 		margin:10px;
 		font-size:5em;
 		position: absolute;
-		top:50px;
-		height:100%;
+		margin:50px;
+		top:80px;
+		height:80%;
 		width: 100%;
 		overflow:visible;
 		color:black;
@@ -212,9 +914,14 @@ header img{
 	
 	#botones{
 		position:absolute;
-		margin-left:30%;
+		margin-left:25%;
 		margin-top:3%;
 		color: white;
+	}
+	#botones span{
+		visibility: hidden;
+		height: 0px;
+		width: 0px;
 	}
 
 	#botones a{
@@ -243,13 +950,7 @@ header img{
 		width: 60%;	
 	}
 	
-	#facebook{
-		display:none;
-		position: absolute;
-		top:75%;
-		width: 10%;
-		margin-left: 20%;
-	}
+
 	
 	#bzonausu{
 		padding: 3px;
@@ -280,25 +981,22 @@ header img{
 	}
 	
 	#redes2{
+		visibility: visible;
 		color: white;
 		position:absolute;
 		margin-top:5%;
-		height: 60%;
+		height: 70%;
 		width: 15%;
 		margin-left: 84%;
+		overflow: hidden;
 	}
-	
-	#redes2 *{
-		padding: 10px;
+	#redes2 iframe{
+		visibility: visible;
+		height: 60%;
 	}
 	
 	footer{
-		color:white;
-    	position: absolute;
-    	overflow: hidden;
     	left: 30%;
-    	top: 95%;
-    	text-align: center;
 	}
 	
 	.paquete img{
@@ -337,8 +1035,9 @@ header img{
 		margin:10px;
 		font-size:5em;
 		position: absolute;
-		top:50px;
-		height:100%;
+		margin:50px;
+		top:80px;
+		height:80%;
 		width: 100%;
 		overflow:visible;
 		color:black;
@@ -374,4 +1073,8 @@ header img{
 		height: 100px;
 	}
 	
+	#icotwt{
+	visibility:hidden; 
+	
+	}
 }

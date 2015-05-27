@@ -8,5 +8,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <div id="facebook">
-    <div class="fb-comments" data-href="https://www.facebook.com/CrystalChroniclesTGC" data-numposts="5" data-width="500px" data-colorscheme="dark"></div>
+    <div class="fb-comments" data-href="https://www.facebook.com/CrystalChroniclesTGC" data-numposts="5" data-width="550" data-colorscheme="dark"></div>
 </div>
+<div id="icofbk"><img src="plugin/facebook/facebook-logo.png"></div>

@@ -6,7 +6,7 @@ class Config{
 	static public $bd_user="root";
 	static public $bd_pass="";
 	static public $bd_bd="crystalchronicles";
-	static public $css = "v.estilo.css";
+	static public $css = "v.estilo2.css";
 	
 //Configuracion del smtp para el envio de mails	
 	static public $smtp_host= "smtp.gmail.com";

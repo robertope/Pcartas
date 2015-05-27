@@ -1,1 +1,1 @@
-<a id="binicio">Inicio</a><a id="bnoticias">Noticias</a><a id="breg">Registro</a><a id="bforo">Foro</a>
+<span id="bmenu">MENÚ</span><a id="binicio">Inicio</a><a id="bnoticias">Noticias</a><a id="breg">Registro</a><a id="bforo">Foro</a>
